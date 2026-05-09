@@ -1,5 +1,5 @@
 # AI Experiments
 
-## Demo Video
+## Checkout Motion
 
-[▶ Watch Video](./demo/video-1.mp4)
+[▶ Watch Video](https://www.bilibili.com/video/BV152RSBqEDP/)
