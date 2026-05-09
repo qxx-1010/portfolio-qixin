@@ -655,6 +655,70 @@ AI Experiments with Claude Code
             color: white;
             transform: scale(1.15) rotate(5deg);
         }
+
+        /* Video Demo Section Styles */
+        .demo-section {
+            background: linear-gradient(135deg, #F5F5F5 0%, #FAFAFA 100%);
+            border: 1px solid #E5E5E5;
+            border-radius: 12px;
+            padding: 40px 30px;
+            margin-bottom: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(10, 10, 10, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            background: #000;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .demo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #0A0A0A;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .demo-badge svg {
+            width: 14px;
+            height: 14px;
+        }
     </style>
 </head>
 <body class="bg-white min-h-screen">
@@ -677,6 +741,30 @@ AI Experiments with Claude Code
                 </a>
             </div>
         </header>
+
+        <!-- Demo/Showcase Section -->
+        <section class="fade-in-section visible demo-section" style="transition-delay: 50ms;">
+            <div class="relative z-10">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="demo-badge">
+                        <i data-lucide="play-circle" class="w-4 h-4"></i>
+                        WATCH DEMO
+                    </div>
+                </div>
+                <h2 class="text-3xl lg:text-4xl font-bold mb-3 text-black">
+                    AI Experiments Demo
+                </h2>
+                <p class="text-gray text-lg mb-6 max-w-2xl">
+                    Explore our latest AI experiments and innovations. Watch how our cutting-edge technology transforms creative possibilities.
+                </p>
+                <div class="video-container">
+                    <video controls playsinline>
+                        <source src="demo/video%20(1).mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </section>
 
         <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 mt-12">
             <!-- Left Column: Form Sections -->
@@ -925,7 +1013,7 @@ AI Experiments with Claude Code
                                 <div class="payment-icon">
                                     <div class="payment-icon-bg">
                                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                                            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.89-.68 4.05.63 1.44 1.57.86 4.3.3 5.31.87 1.22 1.32 2.01 1.56 3.09.21 1.06.02 2.33-.86 3.14z"/>
                                         </svg>
                                     </div>
                                 </div>
@@ -942,7 +1030,7 @@ AI Experiments with Claude Code
                                 <div class="payment-icon">
                                     <div class="payment-icon-bg">
                                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/>
+                                            <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.02.14-.04.28-.063.42H7.22c-.976 0-1.773.628-2.022 1.524L5.316 12h8.514c2.33 0 4.596.745 5.786 2.233 1.19 1.488 1.353 3.518.856 5.606-.684 3.08-3.064 5.255-6.386 5.255H7.076z"/>
                                         </svg>
                                     </div>
                                 </div>
@@ -972,7 +1060,7 @@ AI Experiments with Claude Code
                                     Coupon Code
                                 </label>
                             </div>
-                            <button type="button" id="applyCoupon" class="btn-primary h-[52px] px-8 bg-black text-white text-sm font-semibold uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:hover:shadow-none" disabled>
+                            <button type="button" id="applyCoupon" class="btn-primary h-[52px] px-8 bg-black text-white text-sm font-semibold uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed">
                                 Apply
                             </button>
                         </div>
@@ -998,46 +1086,32 @@ AI Experiments with Claude Code
                                 <!-- Product 1 -->
                                 <div class="flex gap-4 group">
                                     <div class="product-icon">
-                                        <i data-lucide="watch" class="w-6 h-6 text-gray"></i>
+                                        <i data-lucide="package" class="w-6 h-6 text-gray"></i>
                                     </div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="font-medium text-sm truncate">Minimalist Leather Watch</p>
-                                        <p class="text-sm text-gray">Qty: 1</p>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-sm">Premium Product</p>
+                                        <p class="text-xs text-gray">Qty: 1</p>
                                     </div>
-                                    <p class="font-medium text-sm animate-number" data-value="189.00">$189.00</p>
-                                </div>
-
-                                <!-- Product 2 -->
-                                <div class="flex gap-4 group">
-                                    <div class="product-icon">
-                                        <i data-lucide="shirt" class="w-6 h-6 text-gray"></i>
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="font-medium text-sm truncate">Organic Cotton Tee</p>
-                                        <p class="text-sm text-gray">Qty: 2</p>
-                                    </div>
-                                    <p class="font-medium text-sm animate-number" data-value="90.00">$90.00</p>
+                                    <p class="font-semibold text-sm">$99.99</p>
                                 </div>
                             </div>
 
-                            <!-- Divider with animated line -->
-                            <div class="border-t border-border my-6 relative">
-                                <div class="absolute top-0 left-0 w-0 h-0.5 bg-black transition-all duration-700" id="dividerLine" style="width: 0%;"></div>
-                            </div>
+                            <!-- Divider -->
+                            <div class="border-t border-border my-6"></div>
 
-                            <!-- Totals -->
-                            <div class="space-y-3 text-sm">
-                                <div class="flex justify-between items-center">
+                            <!-- Summary Details -->
+                            <div class="space-y-3 text-sm mb-6">
+                                <div class="flex items-center justify-between">
                                     <span class="text-gray">Subtotal</span>
-                                    <span class="font-medium animate-number" data-value="279.00">$279.00</span>
+                                    <span class="font-medium">$99.99</span>
                                 </div>
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-center justify-between">
                                     <span class="text-gray">Shipping</span>
-                                    <span class="font-medium transition-all duration-300" id="shippingCost">Free</span>
+                                    <span class="font-medium" id="shippingCost">Free</span>
                                 </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray">Tax (8%)</span>
-                                    <span class="font-medium animate-number" data-value="22.32">$22.32</span>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray">Tax</span>
+                                    <span class="font-medium">$8.00</span>
                                 </div>
                             </div>
 
@@ -1045,491 +1119,89 @@ AI Experiments with Claude Code
                             <div class="border-t border-border my-6"></div>
 
                             <!-- Total -->
-                            <div class="flex justify-between items-center">
-                                <span class="font-semibold text-base">Total</span>
-                                <span class="font-bold text-2xl animate-count-up" id="totalAmount">$301.32</span>
+                            <div class="flex items-center justify-between mb-8">
+                                <span class="font-semibold text-black">Total</span>
+                                <span class="text-2xl font-bold text-black" id="totalAmount">$107.99</span>
                             </div>
 
                             <!-- CTA Button -->
-                            <button type="button" id="payButton" class="btn-primary w-full h-14 mt-8 bg-black text-white text-sm font-semibold uppercase tracking-[0.2em] flex items-center justify-center gap-3 relative overflow-hidden group">
-                                <i data-lucide="lock" class="w-4 h-4 relative z-10"></i>
-                                <span id="btnText" class="relative z-10">Pay Now</span>
-                                <span id="btnTextLoading" class="hidden relative z-10">Processing<span class="loading-dots"></span></span>
-                                <div id="btnSpinner" class="hidden relative z-10">
-                                    <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"></circle>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                </div>
-                                <!-- Success state -->
-                                <div id="successContainer" class="hidden absolute inset-0 flex items-center justify-center bg-success">
-                                    <svg class="lottie-success w-8 h-8" viewBox="0 0 52 52">
-                                        <circle class="success-circle" cx="26" cy="26" r="24" fill="none" stroke="#fff" stroke-width="2"/>
-                                        <path class="success-check" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M14 27l7 7 16-16"/>
-                                    </svg>
-                                </div>
+                            <button class="btn-primary w-full h-[52px] bg-black text-white text-sm font-semibold uppercase tracking-widest hover:bg-gray-light transition-all duration-300">
+                                Complete Purchase
                             </button>
-
-                            <!-- Trust Badges -->
-                            <div class="flex items-center justify-center gap-2 mt-4 text-gray text-xs">
-                                <i data-lucide="shield-check" class="w-3 h-3"></i>
-                                <span>Secure Payment</span>
-                                <span class="mx-2">·</span>
-                                <span>SSL Encrypted</span>
-                            </div>
                         </div>
                     </section>
                 </div>
             </div>
         </div>
-
-        <!-- Footer -->
-        <footer class="fade-in-section visible mt-16 pt-8 border-t border-border" style="transition-delay: 500ms;">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-light">
-                <p>&copy; 2026 Minimal. All rights reserved.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:text-black transition-colors duration-150 relative overflow-hidden group flex items-center gap-1.5">
-                        <i data-lucide="file-text" class="w-3 h-3 transition-transform duration-200 group-hover:scale-110"></i>
-                        <span class="relative z-10">Terms</span>
-                        <span class="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                    <a href="#" class="hover:text-black transition-colors duration-150 relative overflow-hidden group flex items-center gap-1.5">
-                        <i data-lucide="shield" class="w-3 h-3 transition-transform duration-200 group-hover:scale-110"></i>
-                        <span class="relative z-10">Privacy</span>
-                        <span class="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                    <a href="#" class="hover:text-black transition-colors duration-150 relative overflow-hidden group flex items-center gap-1.5">
-                        <i data-lucide="mail" class="w-3 h-3 transition-transform duration-200 group-hover:scale-110"></i>
-                        <span class="relative z-10">Contact</span>
-                        <span class="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                </div>
-            </div>
-        </footer>
     </div>
 
-    <!-- Mobile CTA (visible on mobile/tablet) -->
-    <div class="mobile-cta lg:hidden bg-white border-t border-border p-5">
-        <button type="button" id="payButtonMobile" class="btn-primary w-full h-14 bg-black text-white text-sm font-semibold uppercase tracking-[0.2em] flex items-center justify-center gap-2">
-            <span id="btnTextMobile">Pay Now</span>
-            <span id="totalMobile" class="font-semibold">$301.32</span>
-        </button>
-    </div>
-
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
 
-        // DOM Elements
-        const fullNameInput = document.getElementById('fullName');
-        const phoneInput = document.getElementById('phone');
-        const addressInput = document.getElementById('address');
-        const cityInput = document.getElementById('city');
-        const postalCodeInput = document.getElementById('postalCode');
-        const countrySelect = document.getElementById('country');
-
-        const deliveryOptions = document.querySelectorAll('[data-shipping]');
-        const paymentOptions = document.querySelectorAll('[data-payment]');
-        const cardDetails = document.getElementById('cardDetails');
-
-        const couponToggle = document.getElementById('couponToggle');
-        const couponSection = document.getElementById('couponSection');
-        const couponChevron = document.getElementById('couponChevron');
-        const couponCodeInput = document.getElementById('couponCode');
-        const applyCouponBtn = document.getElementById('applyCoupon');
-        const couponMessage = document.getElementById('couponMessage');
-
-        const payButton = document.getElementById('payButton');
-        const payButtonMobile = document.getElementById('payButtonMobile');
-        const btnText = document.getElementById('btnText');
-        const btnTextMobile = document.getElementById('btnTextMobile');
-        const btnTextLoading = document.getElementById('btnTextLoading');
-        const btnSpinner = document.getElementById('btnSpinner');
-        const successContainer = document.getElementById('successContainer');
-
-        const shippingCostEl = document.getElementById('shippingCost');
-        const totalAmountEl = document.getElementById('totalAmount');
-        const totalMobileEl = document.getElementById('totalMobile');
-        const dividerLine = document.getElementById('dividerLine');
-
-        // State
-        let currentShipping = 0;
-        const subtotal = 279.00;
-        const tax = 22.32;
-
-        // Animated number counter
-        function animateNumber(element, targetValue, prefix = '$') {
-            const duration = 600;
-            const startTime = performance.now();
-            const startValue = 0;
-
-            function update(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-
-                // Easing function (ease-out cubic)
-                const eased = 1 - Math.pow(1 - progress, 3);
-                const currentValue = startValue + (targetValue - startValue) * eased;
-
-                element.textContent = prefix + currentValue.toFixed(2);
-
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                }
-            }
-
-            requestAnimationFrame(update);
-        }
-
-        // Input validation with enhanced animation
-        function validateInput(input) {
-            const value = input.value.trim();
-            const validIcon = input.parentElement.querySelector('.valid-icon');
-
-            if (input.validity.valid && value.length > 0) {
-                input.classList.remove('invalid');
-                input.classList.add('valid');
-                if (validIcon) {
-                    validIcon.style.opacity = '1';
-                    validIcon.style.transform = 'scale(1) translateY(-50%)';
-                }
-                return true;
-            } else if (value.length > 0) {
-                input.classList.remove('valid');
-                input.classList.add('invalid');
-                if (validIcon) {
-                    validIcon.style.opacity = '0';
-                    validIcon.style.transform = 'scale(0) translateY(-50%)';
-                }
-                return false;
-            } else {
-                input.classList.remove('valid', 'invalid');
-                if (validIcon) {
-                    validIcon.style.opacity = '0';
-                    validIcon.style.transform = 'scale(0) translateY(-50%)';
-                }
-                return false;
-            }
-        }
-
-        // Add validation listeners
-        [fullNameInput, phoneInput, addressInput, cityInput, postalCodeInput].forEach(input => {
-            input.addEventListener('blur', () => validateInput(input));
-            input.addEventListener('input', () => {
-                if (input.classList.contains('invalid') || input.classList.contains('valid')) {
-                    validateInput(input);
-                }
-            });
-        });
-
-        // Phone number formatting
-        phoneInput.addEventListener('input', (e) => {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 10) value = value.slice(0, 10);
-            e.target.value = value;
-        });
-
-        // Delivery option selection with enhanced animation
-        deliveryOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                deliveryOptions.forEach(opt => {
-                    opt.classList.remove('selected');
-                    const circle = opt.querySelector('.rounded-full');
-                    circle.classList.remove('border-black');
-                    circle.classList.add('border-gray-light');
-                    const dot = circle.querySelector('div');
-                    dot.style.opacity = '0';
-                    dot.style.transform = 'scale(0)';
-                });
-
-                option.classList.add('selected');
-                const circle = option.querySelector('.rounded-full');
-                circle.classList.remove('border-gray-light');
-                circle.classList.add('border-black');
-                const dot = circle.querySelector('div');
-                setTimeout(() => {
-                    dot.style.opacity = '1';
-                    dot.style.transform = 'scale(1)';
-                }, 50);
-
-                // Update shipping cost with animation
-                currentShipping = parseFloat(option.dataset.shipping);
-                updateTotals();
-            });
-        });
-
-        // Payment option selection with enhanced animation
-        paymentOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                paymentOptions.forEach(opt => {
-                    opt.classList.remove('selected');
-                    const circle = opt.querySelector('.rounded-full');
-                    circle.classList.remove('border-black');
-                    circle.classList.add('border-gray-light');
-                    const dot = circle.querySelector('div');
-                    dot.style.opacity = '0';
-                    dot.style.transform = 'scale(0)';
-                });
-
-                option.classList.add('selected');
-                const circle = option.querySelector('.rounded-full');
-                circle.classList.remove('border-gray-light');
-                circle.classList.add('border-black');
-                const dot = circle.querySelector('div');
-                setTimeout(() => {
-                    dot.style.opacity = '1';
-                    dot.style.transform = 'scale(1)';
-                }, 50);
-
-                // Show/hide card details
-                const paymentType = option.dataset.payment;
-                if (paymentType === 'card') {
-                    cardDetails.classList.add('active');
-                } else {
-                    cardDetails.classList.remove('active');
-                }
-            });
-        });
-
-        // Card number formatting
-        document.getElementById('cardNumber').addEventListener('input', (e) => {
-            let value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
-            let formatted = value.match(/.{1,4}/g)?.join(' ') || '';
-            e.target.value = formatted;
-
-            // Validate and show checkmark
-            const validIcon = e.target.parentElement.querySelector('.valid-icon');
-            if (value.length === 16) {
-                if (validIcon) {
-                    validIcon.style.opacity = '1';
-                    validIcon.style.transform = 'scale(1) translateY(-50%)';
-                }
-            } else {
-                if (validIcon) {
-                    validIcon.style.opacity = '0';
-                    validIcon.style.transform = 'scale(0) translateY(-50%)';
-                }
-            }
-        });
-
-        // Expiry date formatting
-        document.getElementById('expiry').addEventListener('input', (e) => {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length >= 2) {
-                value = value.slice(0, 2) + '/' + value.slice(2, 4);
-            }
-            e.target.value = value;
-        });
-
-        // CVV formatting
-        document.getElementById('cvv').addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/\D/g, '');
-        });
-
-        // Coupon toggle with enhanced animation
-        couponToggle.addEventListener('click', () => {
-            const isActive = couponSection.classList.toggle('active');
-            couponChevron.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0)';
-
-            if (isActive) {
-                setTimeout(() => {
-                    couponCodeInput.focus();
-                }, 300);
-            }
-        });
-
-        // Coupon code input
-        couponCodeInput.addEventListener('input', () => {
-            applyCouponBtn.disabled = couponCodeInput.value.trim().length === 0;
-        });
-
-        // Apply coupon with animation
-        applyCouponBtn.addEventListener('click', () => {
-            const code = couponCodeInput.value.trim().toUpperCase();
-            if (code === 'SAVE10') {
-                couponMessage.textContent = 'Coupon applied! 10% off your order.';
-                couponMessage.classList.remove('hidden', 'text-error');
-                couponMessage.classList.add('text-success', 'animate-slide-left');
-                applyCouponBtn.disabled = true;
-                applyCouponBtn.textContent = 'Applied';
-
-                // Trigger confetti
-                createConfetti();
-            } else {
-                couponMessage.textContent = 'Invalid coupon code.';
-                couponMessage.classList.remove('hidden', 'text-success');
-                couponMessage.classList.add('text-error', 'animate-shake');
-                applyCouponBtn.classList.add('animate-shake');
-                setTimeout(() => {
-                    applyCouponBtn.classList.remove('animate-shake');
-                }, 500);
-            }
-            setTimeout(() => {
-                couponMessage.classList.add('hidden');
-                couponMessage.classList.remove('animate-slide-left', 'animate-shake');
-            }, 3000);
-        });
-
-        // Confetti creation
-        function createConfetti() {
-            const container = document.getElementById('confettiContainer');
-            const colors = ['#0A0A0A', '#16A34A', '#F5A623', '#6B6B6B', '#E5E5E5'];
-
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti-piece';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                container.appendChild(confetti);
-
-                setTimeout(() => {
-                    confetti.remove();
-                }, 4000);
-            }
-        }
-
-        // Update totals with animation
-        function updateTotals() {
-            const total = subtotal + currentShipping + tax;
-
-            // Animate shipping cost change
-            if (currentShipping === 0) {
-                shippingCostEl.textContent = 'Free';
-            } else {
-                shippingCostEl.textContent = '$' + currentShipping.toFixed(2);
-            }
-
-            // Animate total
-            const currentTotal = parseFloat(totalAmountEl.textContent.replace('$', ''));
-            animateNumber(totalAmountEl, total);
-            animateNumber(totalMobileEl, total);
-        }
-
-        // Payment button animation
-        function processPayment(button, textEl, isMobile = false) {
-            // Add loading state
-            button.classList.add('loading');
-            textEl.classList.add('hidden');
-            btnTextLoading.classList.remove('hidden');
-            btnSpinner.classList.remove('hidden');
-
-            // Simulate payment processing
-            setTimeout(() => {
-                // Show success state
-                button.classList.remove('loading');
-                button.classList.add('success');
-                btnTextLoading.classList.add('hidden');
-                btnSpinner.classList.add('hidden');
-
-                if (!isMobile) {
-                    successContainer.classList.remove('hidden');
-                    successContainer.classList.add('animate-bounce-in');
-                } else {
-                    textEl.textContent = 'Success!';
-                    textEl.classList.remove('hidden');
-                }
-
-                // Create confetti celebration
-                createConfetti();
-
-                setTimeout(() => {
-                    alert('Payment successful! Thank you for your order.');
-                }, 800);
-            }, 2500);
-        }
-
-        payButton.addEventListener('click', () => processPayment(payButton, btnText, false));
-        payButtonMobile.addEventListener('click', () => processPayment(payButtonMobile, btnTextMobile, true));
-
-        // Scroll animations with Intersection Observer
+        // Video demo section fade in on scroll
+        const demoSection = document.querySelector('.demo-section');
         const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
 
-        const observer = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-
-                    // Animate divider line when order summary is visible
-                    if (entry.target.querySelector('#dividerLine')) {
-                        setTimeout(() => {
-                            document.getElementById('dividerLine').style.width = '100%';
-                        }, 200);
-                    }
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.fade-in-section').forEach(section => {
-            observer.observe(section);
-        });
+        if (demoSection) {
+            observer.observe(demoSection);
+        }
 
-        // Mobile scroll effect
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            const mobileCta = document.querySelector('.mobile-cta');
-            if (mobileCta) {
-                if (scrolled > 100) {
-                    mobileCta.classList.add('shadow-lg', 'bg-white/95', 'backdrop-blur-sm');
-                } else {
-                    mobileCta.classList.remove('shadow-lg', 'bg-white/95', 'backdrop-blur-sm');
-                }
-            }
-        });
-
-        // Add ripple effect to buttons
-        document.querySelectorAll('.btn-primary').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const ripple = document.createElement('span');
-                ripple.style.cssText = `
-                    position: absolute;
-                    background: rgba(255, 255, 255, 0.3);
-                    border-radius: 50%;
-                    pointer-events: none;
-                    width: 100px;
-                    height: 100px;
-                    left: ${x - 50}px;
-                    top: ${y - 50}px;
-                    transform: scale(0);
-                    animation: ripple 0.6s linear;
-                `;
-
-                this.appendChild(ripple);
-
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
+        // Payment method selection
+        document.querySelectorAll('[data-payment]').forEach(option => {
+            option.addEventListener('change', function() {
+                document.querySelectorAll('[data-payment]').forEach(o => {
+                    o.classList.remove('selected');
+                    const detail = document.querySelector(`#${o.id}Details`);
+                    if (detail) detail.classList.remove('active');
+                });
+                this.classList.add('selected');
+                const detailId = this.getAttribute('data-payment') + 'Details';
+                const detail = document.getElementById(detailId);
+                if (detail) detail.classList.add('active');
             });
         });
 
-        // Section number pulse effect
-        document.querySelectorAll('.section-number').forEach((num, index) => {
-            setTimeout(() => {
-                num.classList.add('pulse');
-                setTimeout(() => {
-                    num.classList.remove('pulse');
-                }, 1500);
-            }, 100 * index);
+        // Shipping selection
+        document.querySelectorAll('[data-shipping]').forEach(option => {
+            option.addEventListener('change', function() {
+                document.querySelectorAll('[data-shipping]').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                updateTotal();
+            });
         });
 
-        // Initialize divider animation after page load
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                if (document.getElementById('dividerLine')) {
-                    document.getElementById('dividerLine').style.width = '100%';
-                }
-            }, 1000);
+        // Coupon toggle
+        document.getElementById('couponToggle')?.addEventListener('click', function() {
+            const section = document.getElementById('couponSection');
+            const chevron = document.getElementById('couponChevron');
+            section.classList.toggle('active');
+            chevron.style.transform = section.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
         });
+
+        function updateTotal() {
+            // Calculate total based on shipping selection
+            const selectedShipping = document.querySelector('[data-shipping].selected');
+            const shippingCost = parseFloat(selectedShipping?.getAttribute('data-shipping') || 0);
+            const subtotal = 99.99;
+            const tax = 8.00;
+            const total = subtotal + shippingCost + tax;
+            
+            document.getElementById('shippingCost').textContent = shippingCost > 0 ? `$${shippingCost.toFixed(2)}` : 'Free';
+            document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+        }
     </script>
 </body>
 </html>
