@@ -1,1 +1,1535 @@
 AI Experiments with Claude Code
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Complete Your Order</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'black': '#0A0A0A',
+                        'black-light': '#262626',
+                        'gray': '#6B6B6B',
+                        'gray-light': '#9CA3AF',
+                        'gray-bg': '#FAFAFA',
+                        'gray-select': '#F5F5F5',
+                        'border': '#E5E5E5',
+                        'success': '#16A34A',
+                        'error': '#DC2626',
+                        'gold': '#F5A623',
+                    },
+                    spacing: {
+                        '18': '4.5rem',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'float-label': 'floatLabel 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'spinner': 'spinner 0.8s linear infinite',
+                        'check-draw': 'checkDraw 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'expand': 'expand 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'bounce-in': 'bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+                        'shake': 'shake 0.5s ease-in-out',
+                        'confetti': 'confetti 1s ease-out forwards',
+                        'ripple': 'ripple 0.6s linear',
+                        'scale-in': 'scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'slide-left': 'slideLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'count-up': 'countUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        floatLabel: {
+                            '0%': { transform: 'translateY(0) scale(1)', fontSize: '13px' },
+                            '100%': { transform: 'translateY(-26px) scale(0.85)', fontSize: '11px' },
+                        },
+                        spinner: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' },
+                        },
+                        checkDraw: {
+                            '0%': { strokeDashoffset: '50', opacity: '0' },
+                            '50%': { opacity: '1' },
+                            '100%': { strokeDashoffset: '0', opacity: '1' },
+                        },
+                        expand: {
+                            '0%': { maxHeight: '0', opacity: '0', transform: 'translateY(-10px)' },
+                            '100%': { maxHeight: '500px', opacity: '1', transform: 'translateY(0)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(10, 10, 10, 0)' },
+                            '50%': { boxShadow: '0 0 20px 2px rgba(10, 10, 10, 0.15)' },
+                        },
+                        bounceIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.3)' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-4px)' },
+                            '20%, 40%, 60%, 80%': { transform: 'translateX(4px)' },
+                        },
+                        confetti: {
+                            '0%': { transform: 'translateY(0) rotate(0deg)', opacity: '1' },
+                            '100%': { transform: 'translateY(-100px) rotate(720deg)', opacity: '0' },
+                        },
+                        ripple: {
+                            '0%': { transform: 'scale(0)', opacity: '0.5' },
+                            '100%': { transform: 'scale(4)', opacity: '0' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        slideLeft: {
+                            '0%': { transform: 'translateX(20px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        },
+                        countUp: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #0A0A0A;
+        }
+
+        /* Enhanced input field transitions */
+        .input-field {
+            transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                        background-color 0.25s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-width: 2px;
+            border-color: #0A0A0A;
+            background-color: #FAFAFA;
+        }
+
+        .input-field.valid {
+            border-color: #16A34A;
+        }
+
+        .input-field.valid:focus {
+            border-color: #16A34A;
+            background-color: #FAFAFA;
+        }
+
+        .input-field.invalid {
+            border-color: #DC2626;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .floating-label {
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .input-field:focus + .floating-label,
+        .input-field:not(:placeholder-shown) + .floating-label {
+            transform: translateY(-26px) scale(0.85);
+            font-size: 11px;
+            letter-spacing: 0.05em;
+        }
+
+        .input-field::placeholder {
+            color: transparent;
+        }
+
+        /* Enhanced option card transitions */
+        .option-card {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .option-card:hover::before {
+            left: 100%;
+        }
+
+        .option-card:hover {
+            border-color: #9CA3AF;
+            transform: translateX(4px);
+        }
+
+        .option-card.selected {
+            border-width: 2px;
+            border-color: #0A0A0A;
+            background-color: #F5F5F5;
+        }
+
+        .option-card.selected:hover {
+            transform: translateX(0);
+        }
+
+        /* Payment detail expansion */
+        .payment-detail {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.3s ease,
+                        padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .payment-detail.active {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        /* Enhanced button styles */
+        .btn-primary {
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .btn-primary:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            background-color: #262626;
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98) translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary.loading {
+            pointer-events: none;
+        }
+
+        .btn-primary.success {
+            background-color: #16A34A;
+        }
+
+        /* Fade in sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Coupon section */
+        .coupon-section {
+            max-height: 0;
+            overflow: visible;
+            opacity: 0;
+            margin-top: 0;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.3s ease,
+                        margin-top 0.3s ease;
+        }
+
+        .coupon-section.active {
+            max-height: 150px;
+            opacity: 1;
+            margin-top: 16px;
+        }
+
+        .coupon-section .flex {
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transition: visibility 0.3s ease, opacity 0.3s ease;
+        }
+
+        .coupon-section.active .flex {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #FAFAFA;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #E5E5E5;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9CA3AF;
+        }
+
+        /* Order summary sticky */
+        @media (min-width: 1024px) {
+            .order-summary-sticky {
+                position: sticky;
+                top: 48px;
+            }
+        }
+
+        /* Mobile CTA fixed */
+        @media (max-width: 1023px) {
+            .mobile-cta {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+                padding: 20px;
+                background: white;
+                border-top: 1px solid #E5E5E5;
+            }
+
+            .page-content {
+                padding-bottom: 120px;
+            }
+        }
+
+        /* Lottie-style success animation container */
+        .lottie-success {
+            width: 60px;
+            height: 60px;
+        }
+
+        .lottie-success circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            animation: circleDraw 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .lottie-success path {
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: checkDraw 0.4s 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes circleDraw {
+            100% { stroke-dashoffset: 0; }
+        }
+
+        /* Confetti particles */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -20px;
+            animation: confettiFall 3s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Number counter animation */
+        .animate-number {
+            display: inline-block;
+        }
+
+        /* Loading dots */
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        /* Product image hover zoom */
+        .product-image {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .product-image:hover {
+            transform: scale(1.1);
+        }
+
+        /* Section indicator pulse */
+        .section-number {
+            position: relative;
+        }
+
+        .section-number::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #0A0A0A;
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0;
+            z-index: -1;
+        }
+
+        .section-number.pulse::after {
+            animation: numberPulse 1.5s ease-out infinite;
+        }
+
+        @keyframes numberPulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* Input success checkmark SVG animation */
+        .check-svg {
+            stroke-dasharray: 20;
+            stroke-dashoffset: 20;
+            animation: checkSvgDraw 0.3s 0.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes checkSvgDraw {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Section Icon Animations - Lottie Style */
+        .section-icon {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-icon::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: transparent;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-icon:hover::before {
+            background: rgba(10, 10, 10, 0.06);
+            animation: iconPulse 0.6s ease-out;
+        }
+
+        .section-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .section-icon svg {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-icon:hover svg {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        /* Icon path animation on hover */
+        .section-icon[data-animate="true"]:hover svg path,
+        .section-icon[data-animate="true"]:hover svg line,
+        .section-icon[data-animate="true"]:hover svg circle,
+        .section-icon[data-animate="true"]:hover svg rect,
+        .section-icon[data-animate="true"]:hover svg polyline,
+        .section-icon[data-animate="true"]:hover svg polygon {
+            animation: iconStroke 0.6s ease-out forwards;
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+        }
+
+        @keyframes iconPulse {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+
+        @keyframes iconStroke {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Section title with icon */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title .icon-wrapper {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0A0A0A;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-title:hover .icon-wrapper {
+            background: #262626;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title .step-indicator {
+            width: 24px;
+            height: 24px;
+            border: 1.5px solid #0A0A0A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-title:hover .step-indicator {
+            background: #0A0A0A;
+            color: white;
+        }
+
+        /* Delivery option icons */
+        .delivery-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #F5F5F5;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .option-card:hover .delivery-icon {
+            background: #E5E5E5;
+            transform: scale(1.1);
+        }
+
+        .option-card.selected .delivery-icon {
+            background: #0A0A0A;
+            color: white;
+        }
+
+        .option-card.selected .delivery-icon svg {
+            color: white;
+        }
+
+        /* Payment method icons */
+        .payment-icon {
+            width: 44px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .option-card:hover .payment-icon {
+            transform: translateY(-2px);
+        }
+
+        .payment-icon-bg {
+            width: 44px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #E5E5E5;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .option-card:hover .payment-icon-bg {
+            background: #D4D4D4;
+        }
+
+        .option-card.selected .payment-icon-bg {
+            background: #0A0A0A;
+        }
+
+        /* Product item icon */
+        .product-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #E5E5E5;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .product-icon svg {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .group:hover .product-icon {
+            background: #0A0A0A;
+        }
+
+        .group:hover .product-icon svg {
+            color: white;
+            transform: scale(1.15) rotate(5deg);
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen">
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <div class="max-w-[1200px] mx-auto px-6 lg:px-12 py-12 lg:py-16">
+        <!-- Header -->
+        <header class="fade-in-section visible" style="transition-delay: 0ms;">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3 group cursor-pointer">
+                    <div class="w-10 h-10 bg-black flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 section-icon" data-animate="true">
+                        <span class="text-white font-bold text-sm">M</span>
+                    </div>
+                    <span class="font-semibold text-lg tracking-tight">MINIMAL</span>
+                </div>
+                <a href="#" class="flex items-center gap-2 text-gray hover:text-black transition-all duration-200 group">
+                    <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200"></i>
+                    <span class="text-sm">Back to Cart</span>
+                </a>
+            </div>
+        </header>
+
+        <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 mt-12">
+            <!-- Left Column: Form Sections -->
+            <div class="flex-1 lg:flex-[55] space-y-12">
+                <!-- Shipping Address -->
+                <section class="fade-in-section visible" style="transition-delay: 100ms;">
+                    <h2 class="section-title text-sm font-semibold uppercase tracking-widest text-gray mb-8">
+                        <div class="icon-wrapper">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        </div>
+                        <span class="step-indicator">1</span>
+                        Shipping Address
+                    </h2>
+
+                    <div class="space-y-6">
+                        <!-- Full Name -->
+                        <div class="relative group">
+                            <input type="text" id="fullName" placeholder="Full Name" required
+                                class="input-field w-full h-[52px] px-[18px] border border-border bg-white text-[15px] peer">
+                            <label for="fullName" class="floating-label absolute left-[18px] top-[14px] text-[13px] uppercase tracking-wider text-gray-light bg-white px-1">
+                                Full Name
+                            </label>
+                            <div class="valid-icon absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-all duration-300 transform scale-0">
+                                <svg class="w-5 h-5 text-success check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="relative">
+                            <input type="tel" id="phone" placeholder="Phone Number" required
+                                class="input-field w-full h-[52px] px-[18px] border border-border bg-white text-[15px] peer">
+                            <label for="phone" class="floating-label absolute left-[18px] top-[14px] text-[13px] uppercase tracking-wider text-gray-light bg-white px-1">
+                                Phone Number
+                            </label>
+                            <div class="valid-icon absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-all duration-300 transform scale-0">
+                                <svg class="w-5 h-5 text-success check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="relative">
+                            <input type="text" id="address" placeholder="Address" required
+                                class="input-field w-full h-[52px] px-[18px] border border-border bg-white text-[15px] peer">
+                            <label for="address" class="floating-label absolute left-[18px] top-[14px] text-[13px] uppercase tracking-wider text-gray-light bg-white px-1">
+                                Address
+                            </label>
+                            <div class="valid-icon absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-all duration-300 transform scale-0">
+                                <svg class="w-5 h-5 text-success check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- City & Postal Code -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="relative">
+                                <input type="text" id="city" placeholder="City" required
+                                    class="input-field w-full h-[52px] px-[18px] border border-border bg-white text-[15px] peer">
+                                <label for="city" class="floating-label absolute left-[18px] top-[14px] text-[13px] uppercase tracking-wider text-gray-light bg-white px-1">
+                                    City
+                                </label>
+                                <div class="valid-icon absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-all duration-300 transform scale-0">
+                                    <svg class="w-5 h-5 text-success check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <input type="text" id="postalCode" placeholder="Postal Code" required
+                                    class="input-field w-full h-[52px] px-[18px] border border-border bg-white text-[15px] peer">
+                                <label for="postalCode" class="floating-label absolute left-[18px] top-[14px] text-[13px] uppercase tracking-wider text-gray-light bg-white px-1">
+                                    Postal Code
+                                </label>
+                                <div class="valid-icon absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-all duration-300 transform scale-0">
+                                    <svg class="w-5 h-5 text-success check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Country -->
+                        <div class="relative">
+                            <select id="country" required
+                                class="input-field w-full h-[52px] px-[18px] border border-border bg-white text-[15px] appearance-none cursor-pointer">
+                                <option value="">Select Country</option>
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="DE">Germany</option>
+                                <option value="FR">France</option>
+                                <option value="JP">Japan</option>
+                                <option value="AU">Australia</option>
+                            </select>
+                            <label for="country" class="floating-label absolute left-[18px] top-[14px] text-[13px] uppercase tracking-wider text-gray-light bg-white px-1">
+                                Country
+                            </label>
+                            <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-light pointer-events-none transition-transform duration-200"></i>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Delivery Method -->
+                <section class="fade-in-section visible" style="transition-delay: 200ms;">
+                    <h2 class="section-title text-sm font-semibold uppercase tracking-widest text-gray mb-8">
+                        <div class="icon-wrapper">
+                            <i data-lucide="truck" class="w-4 h-4"></i>
+                        </div>
+                        <span class="step-indicator">2</span>
+                        Delivery Method
+                    </h2>
+
+                    <div class="space-y-3">
+                        <!-- Standard -->
+                        <label class="option-card selected cursor-pointer block border border-border p-5" data-shipping="0">
+                            <div class="flex items-center gap-4">
+                                <div class="delivery-icon">
+                                    <i data-lucide="package" class="w-5 h-5 text-gray"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-medium">Standard Delivery</span>
+                                        <span class="font-semibold">Free</span>
+                                    </div>
+                                    <span class="text-sm text-gray">5-7 business days</span>
+                                </div>
+                                <div class="w-5 h-5 rounded-full border-2 border-black flex items-center justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-black transition-all duration-300 transform"></div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Express -->
+                        <label class="option-card cursor-pointer block border border-border p-5" data-shipping="9.99">
+                            <div class="flex items-center gap-4">
+                                <div class="delivery-icon">
+                                    <i data-lucide="zap" class="w-5 h-5 text-gray"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-medium">Express Delivery</span>
+                                        <span class="font-semibold">$9.99</span>
+                                    </div>
+                                    <span class="text-sm text-gray">2-3 business days</span>
+                                </div>
+                                <div class="w-5 h-5 rounded-full border-2 border-gray-light flex items-center justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-black transition-all duration-300 transform scale-0"></div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Next Day -->
+                        <label class="option-card cursor-pointer block border border-border p-5" data-shipping="19.99">
+                            <div class="flex items-center gap-4">
+                                <div class="delivery-icon">
+                                    <i data-lucide="rocket" class="w-5 h-5 text-gray"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-medium">Next Day</span>
+                                        <span class="font-semibold">$19.99</span>
+                                    </div>
+                                    <span class="text-sm text-gray">Delivery by tomorrow</span>
+                                </div>
+                                <div class="w-5 h-5 rounded-full border-2 border-gray-light flex items-center justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-black transition-all duration-300 transform scale-0"></div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Payment Method -->
+                <section class="fade-in-section visible" style="transition-delay: 300ms;">
+                    <h2 class="section-title text-sm font-semibold uppercase tracking-widest text-gray mb-8">
+                        <div class="icon-wrapper">
+                            <i data-lucide="credit-card" class="w-4 h-4"></i>
+                        </div>
+                        <span class="step-indicator">3</span>
+                        Payment Method
+                    </h2>
+
+                    <div class="space-y-3">
+                        <!-- Credit Card -->
+                        <label class="option-card selected cursor-pointer block border border-border p-5" data-payment="card">
+                            <div class="flex items-center gap-4">
+                                <div class="payment-icon">
+                                    <div class="payment-icon-bg">
+                                        <i data-lucide="credit-card" class="w-4 h-4 text-gray"></i>
+                                    </div>
+                                </div>
+                                <span class="font-medium flex-1">Credit Card</span>
+                                <div class="w-5 h-5 rounded-full border-2 border-black flex items-center justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-black transition-all duration-300 transform"></div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Credit Card Details (Expandable) -->
+                        <div class="payment-detail active pl-9" id="cardDetails">
+                            <div class="pt-4 pb-2 space-y-4">
+                                <!-- Card Number -->
+                                <div class="relative">
+                                    <input type="text" id="cardNumber" placeholder="Card Number" maxlength="19"
+                                        class="input-field w-full h-[52px] px-[18px] border border-border bg-white text-[15px]">
+                                    <label for="cardNumber" class="floating-label absolute left-[18px] top-[14px] text-[13px] uppercase tracking-wider text-gray-light bg-white px-1">
+                                        Card Number
+                                    </label>
+                                    <div class="valid-icon absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-all duration-300 transform scale-0">
+                                        <svg class="w-5 h-5 text-success check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Expiry & CVV -->
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="relative">
+                                        <input type="text" id="expiry" placeholder="MM/YY" maxlength="5"
+                                            class="input-field w-full h-[52px] px-[18px] border border-border bg-white text-[15px]">
+                                        <label for="expiry" class="floating-label absolute left-[18px] top-[14px] text-[13px] uppercase tracking-wider text-gray-light bg-white px-1">
+                                            Expiry
+                                        </label>
+                                    </div>
+                                    <div class="relative">
+                                        <input type="text" id="cvv" placeholder="CVV" maxlength="4"
+                                            class="input-field w-full h-[52px] px-[18px] border border-border bg-white text-[15px]">
+                                        <label for="cvv" class="floating-label absolute left-[18px] top-[14px] text-[13px] uppercase tracking-wider text-gray-light bg-white px-1">
+                                            CVV
+                                        </label>
+                                        <div class="absolute right-4 top-1/2 -translate-y-1/2">
+                                            <i data-lucide="lock" class="w-4 h-4 text-gray-light"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Apple Pay -->
+                        <label class="option-card cursor-pointer block border border-border p-5" data-payment="apple">
+                            <div class="flex items-center gap-4">
+                                <div class="payment-icon">
+                                    <div class="payment-icon-bg">
+                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <span class="font-medium flex-1">Apple Pay</span>
+                                <div class="w-5 h-5 rounded-full border-2 border-gray-light flex items-center justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-black transition-all duration-300 transform scale-0"></div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- PayPal -->
+                        <label class="option-card cursor-pointer block border border-border p-5" data-payment="paypal">
+                            <div class="flex items-center gap-4">
+                                <div class="payment-icon">
+                                    <div class="payment-icon-bg">
+                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <span class="font-medium flex-1">PayPal</span>
+                                <div class="w-5 h-5 rounded-full border-2 border-gray-light flex items-center justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-black transition-all duration-300 transform scale-0"></div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Coupon Code -->
+                <section class="fade-in-section visible" style="transition-delay: 350ms;">
+                    <button type="button" id="couponToggle" class="flex items-center gap-3 text-sm text-gray hover:text-black transition-colors duration-200 group">
+                        <i data-lucide="tag" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110"></i>
+                        <span>Have a coupon code?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5 ml-auto" id="couponChevron"></i>
+                    </button>
+
+                    <div class="coupon-section" id="couponSection">
+                        <div class="flex gap-3">
+                            <div class="relative flex-1">
+                                <input type="text" id="couponCode" placeholder="Enter code"
+                                    class="input-field w-full h-[52px] px-[18px] border border-border bg-white text-[15px]">
+                                <label for="couponCode" class="floating-label absolute left-[18px] top-[14px] text-[13px] uppercase tracking-wider text-gray-light bg-white px-1">
+                                    Coupon Code
+                                </label>
+                            </div>
+                            <button type="button" id="applyCoupon" class="btn-primary h-[52px] px-8 bg-black text-white text-sm font-semibold uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:hover:shadow-none" disabled>
+                                Apply
+                            </button>
+                        </div>
+                        <p id="couponMessage" class="text-sm mt-2 hidden"></p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <div class="lg:flex-[45]">
+                <div class="order-summary-sticky">
+                    <section class="fade-in-section visible" style="transition-delay: 400ms;">
+                        <div class="bg-gray-bg p-6 lg:p-8">
+                            <h2 class="section-title text-sm font-semibold uppercase tracking-widest text-gray mb-6">
+                                <div class="icon-wrapper">
+                                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                                </div>
+                                Order Summary
+                            </h2>
+
+                            <!-- Products -->
+                            <div class="space-y-4 mb-6">
+                                <!-- Product 1 -->
+                                <div class="flex gap-4 group">
+                                    <div class="product-icon">
+                                        <i data-lucide="watch" class="w-6 h-6 text-gray"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="font-medium text-sm truncate">Minimalist Leather Watch</p>
+                                        <p class="text-sm text-gray">Qty: 1</p>
+                                    </div>
+                                    <p class="font-medium text-sm animate-number" data-value="189.00">$189.00</p>
+                                </div>
+
+                                <!-- Product 2 -->
+                                <div class="flex gap-4 group">
+                                    <div class="product-icon">
+                                        <i data-lucide="shirt" class="w-6 h-6 text-gray"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="font-medium text-sm truncate">Organic Cotton Tee</p>
+                                        <p class="text-sm text-gray">Qty: 2</p>
+                                    </div>
+                                    <p class="font-medium text-sm animate-number" data-value="90.00">$90.00</p>
+                                </div>
+                            </div>
+
+                            <!-- Divider with animated line -->
+                            <div class="border-t border-border my-6 relative">
+                                <div class="absolute top-0 left-0 w-0 h-0.5 bg-black transition-all duration-700" id="dividerLine" style="width: 0%;"></div>
+                            </div>
+
+                            <!-- Totals -->
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray">Subtotal</span>
+                                    <span class="font-medium animate-number" data-value="279.00">$279.00</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray">Shipping</span>
+                                    <span class="font-medium transition-all duration-300" id="shippingCost">Free</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray">Tax (8%)</span>
+                                    <span class="font-medium animate-number" data-value="22.32">$22.32</span>
+                                </div>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="border-t border-border my-6"></div>
+
+                            <!-- Total -->
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-base">Total</span>
+                                <span class="font-bold text-2xl animate-count-up" id="totalAmount">$301.32</span>
+                            </div>
+
+                            <!-- CTA Button -->
+                            <button type="button" id="payButton" class="btn-primary w-full h-14 mt-8 bg-black text-white text-sm font-semibold uppercase tracking-[0.2em] flex items-center justify-center gap-3 relative overflow-hidden group">
+                                <i data-lucide="lock" class="w-4 h-4 relative z-10"></i>
+                                <span id="btnText" class="relative z-10">Pay Now</span>
+                                <span id="btnTextLoading" class="hidden relative z-10">Processing<span class="loading-dots"></span></span>
+                                <div id="btnSpinner" class="hidden relative z-10">
+                                    <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </div>
+                                <!-- Success state -->
+                                <div id="successContainer" class="hidden absolute inset-0 flex items-center justify-center bg-success">
+                                    <svg class="lottie-success w-8 h-8" viewBox="0 0 52 52">
+                                        <circle class="success-circle" cx="26" cy="26" r="24" fill="none" stroke="#fff" stroke-width="2"/>
+                                        <path class="success-check" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M14 27l7 7 16-16"/>
+                                    </svg>
+                                </div>
+                            </button>
+
+                            <!-- Trust Badges -->
+                            <div class="flex items-center justify-center gap-2 mt-4 text-gray text-xs">
+                                <i data-lucide="shield-check" class="w-3 h-3"></i>
+                                <span>Secure Payment</span>
+                                <span class="mx-2">·</span>
+                                <span>SSL Encrypted</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="fade-in-section visible mt-16 pt-8 border-t border-border" style="transition-delay: 500ms;">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-light">
+                <p>&copy; 2026 Minimal. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-black transition-colors duration-150 relative overflow-hidden group flex items-center gap-1.5">
+                        <i data-lucide="file-text" class="w-3 h-3 transition-transform duration-200 group-hover:scale-110"></i>
+                        <span class="relative z-10">Terms</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="hover:text-black transition-colors duration-150 relative overflow-hidden group flex items-center gap-1.5">
+                        <i data-lucide="shield" class="w-3 h-3 transition-transform duration-200 group-hover:scale-110"></i>
+                        <span class="relative z-10">Privacy</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" class="hover:text-black transition-colors duration-150 relative overflow-hidden group flex items-center gap-1.5">
+                        <i data-lucide="mail" class="w-3 h-3 transition-transform duration-200 group-hover:scale-110"></i>
+                        <span class="relative z-10">Contact</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Mobile CTA (visible on mobile/tablet) -->
+    <div class="mobile-cta lg:hidden bg-white border-t border-border p-5">
+        <button type="button" id="payButtonMobile" class="btn-primary w-full h-14 bg-black text-white text-sm font-semibold uppercase tracking-[0.2em] flex items-center justify-center gap-2">
+            <span id="btnTextMobile">Pay Now</span>
+            <span id="totalMobile" class="font-semibold">$301.32</span>
+        </button>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // DOM Elements
+        const fullNameInput = document.getElementById('fullName');
+        const phoneInput = document.getElementById('phone');
+        const addressInput = document.getElementById('address');
+        const cityInput = document.getElementById('city');
+        const postalCodeInput = document.getElementById('postalCode');
+        const countrySelect = document.getElementById('country');
+
+        const deliveryOptions = document.querySelectorAll('[data-shipping]');
+        const paymentOptions = document.querySelectorAll('[data-payment]');
+        const cardDetails = document.getElementById('cardDetails');
+
+        const couponToggle = document.getElementById('couponToggle');
+        const couponSection = document.getElementById('couponSection');
+        const couponChevron = document.getElementById('couponChevron');
+        const couponCodeInput = document.getElementById('couponCode');
+        const applyCouponBtn = document.getElementById('applyCoupon');
+        const couponMessage = document.getElementById('couponMessage');
+
+        const payButton = document.getElementById('payButton');
+        const payButtonMobile = document.getElementById('payButtonMobile');
+        const btnText = document.getElementById('btnText');
+        const btnTextMobile = document.getElementById('btnTextMobile');
+        const btnTextLoading = document.getElementById('btnTextLoading');
+        const btnSpinner = document.getElementById('btnSpinner');
+        const successContainer = document.getElementById('successContainer');
+
+        const shippingCostEl = document.getElementById('shippingCost');
+        const totalAmountEl = document.getElementById('totalAmount');
+        const totalMobileEl = document.getElementById('totalMobile');
+        const dividerLine = document.getElementById('dividerLine');
+
+        // State
+        let currentShipping = 0;
+        const subtotal = 279.00;
+        const tax = 22.32;
+
+        // Animated number counter
+        function animateNumber(element, targetValue, prefix = '$') {
+            const duration = 600;
+            const startTime = performance.now();
+            const startValue = 0;
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Easing function (ease-out cubic)
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const currentValue = startValue + (targetValue - startValue) * eased;
+
+                element.textContent = prefix + currentValue.toFixed(2);
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        // Input validation with enhanced animation
+        function validateInput(input) {
+            const value = input.value.trim();
+            const validIcon = input.parentElement.querySelector('.valid-icon');
+
+            if (input.validity.valid && value.length > 0) {
+                input.classList.remove('invalid');
+                input.classList.add('valid');
+                if (validIcon) {
+                    validIcon.style.opacity = '1';
+                    validIcon.style.transform = 'scale(1) translateY(-50%)';
+                }
+                return true;
+            } else if (value.length > 0) {
+                input.classList.remove('valid');
+                input.classList.add('invalid');
+                if (validIcon) {
+                    validIcon.style.opacity = '0';
+                    validIcon.style.transform = 'scale(0) translateY(-50%)';
+                }
+                return false;
+            } else {
+                input.classList.remove('valid', 'invalid');
+                if (validIcon) {
+                    validIcon.style.opacity = '0';
+                    validIcon.style.transform = 'scale(0) translateY(-50%)';
+                }
+                return false;
+            }
+        }
+
+        // Add validation listeners
+        [fullNameInput, phoneInput, addressInput, cityInput, postalCodeInput].forEach(input => {
+            input.addEventListener('blur', () => validateInput(input));
+            input.addEventListener('input', () => {
+                if (input.classList.contains('invalid') || input.classList.contains('valid')) {
+                    validateInput(input);
+                }
+            });
+        });
+
+        // Phone number formatting
+        phoneInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 10) value = value.slice(0, 10);
+            e.target.value = value;
+        });
+
+        // Delivery option selection with enhanced animation
+        deliveryOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                deliveryOptions.forEach(opt => {
+                    opt.classList.remove('selected');
+                    const circle = opt.querySelector('.rounded-full');
+                    circle.classList.remove('border-black');
+                    circle.classList.add('border-gray-light');
+                    const dot = circle.querySelector('div');
+                    dot.style.opacity = '0';
+                    dot.style.transform = 'scale(0)';
+                });
+
+                option.classList.add('selected');
+                const circle = option.querySelector('.rounded-full');
+                circle.classList.remove('border-gray-light');
+                circle.classList.add('border-black');
+                const dot = circle.querySelector('div');
+                setTimeout(() => {
+                    dot.style.opacity = '1';
+                    dot.style.transform = 'scale(1)';
+                }, 50);
+
+                // Update shipping cost with animation
+                currentShipping = parseFloat(option.dataset.shipping);
+                updateTotals();
+            });
+        });
+
+        // Payment option selection with enhanced animation
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                paymentOptions.forEach(opt => {
+                    opt.classList.remove('selected');
+                    const circle = opt.querySelector('.rounded-full');
+                    circle.classList.remove('border-black');
+                    circle.classList.add('border-gray-light');
+                    const dot = circle.querySelector('div');
+                    dot.style.opacity = '0';
+                    dot.style.transform = 'scale(0)';
+                });
+
+                option.classList.add('selected');
+                const circle = option.querySelector('.rounded-full');
+                circle.classList.remove('border-gray-light');
+                circle.classList.add('border-black');
+                const dot = circle.querySelector('div');
+                setTimeout(() => {
+                    dot.style.opacity = '1';
+                    dot.style.transform = 'scale(1)';
+                }, 50);
+
+                // Show/hide card details
+                const paymentType = option.dataset.payment;
+                if (paymentType === 'card') {
+                    cardDetails.classList.add('active');
+                } else {
+                    cardDetails.classList.remove('active');
+                }
+            });
+        });
+
+        // Card number formatting
+        document.getElementById('cardNumber').addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
+            let formatted = value.match(/.{1,4}/g)?.join(' ') || '';
+            e.target.value = formatted;
+
+            // Validate and show checkmark
+            const validIcon = e.target.parentElement.querySelector('.valid-icon');
+            if (value.length === 16) {
+                if (validIcon) {
+                    validIcon.style.opacity = '1';
+                    validIcon.style.transform = 'scale(1) translateY(-50%)';
+                }
+            } else {
+                if (validIcon) {
+                    validIcon.style.opacity = '0';
+                    validIcon.style.transform = 'scale(0) translateY(-50%)';
+                }
+            }
+        });
+
+        // Expiry date formatting
+        document.getElementById('expiry').addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2, 4);
+            }
+            e.target.value = value;
+        });
+
+        // CVV formatting
+        document.getElementById('cvv').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+
+        // Coupon toggle with enhanced animation
+        couponToggle.addEventListener('click', () => {
+            const isActive = couponSection.classList.toggle('active');
+            couponChevron.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0)';
+
+            if (isActive) {
+                setTimeout(() => {
+                    couponCodeInput.focus();
+                }, 300);
+            }
+        });
+
+        // Coupon code input
+        couponCodeInput.addEventListener('input', () => {
+            applyCouponBtn.disabled = couponCodeInput.value.trim().length === 0;
+        });
+
+        // Apply coupon with animation
+        applyCouponBtn.addEventListener('click', () => {
+            const code = couponCodeInput.value.trim().toUpperCase();
+            if (code === 'SAVE10') {
+                couponMessage.textContent = 'Coupon applied! 10% off your order.';
+                couponMessage.classList.remove('hidden', 'text-error');
+                couponMessage.classList.add('text-success', 'animate-slide-left');
+                applyCouponBtn.disabled = true;
+                applyCouponBtn.textContent = 'Applied';
+
+                // Trigger confetti
+                createConfetti();
+            } else {
+                couponMessage.textContent = 'Invalid coupon code.';
+                couponMessage.classList.remove('hidden', 'text-success');
+                couponMessage.classList.add('text-error', 'animate-shake');
+                applyCouponBtn.classList.add('animate-shake');
+                setTimeout(() => {
+                    applyCouponBtn.classList.remove('animate-shake');
+                }, 500);
+            }
+            setTimeout(() => {
+                couponMessage.classList.add('hidden');
+                couponMessage.classList.remove('animate-slide-left', 'animate-shake');
+            }, 3000);
+        });
+
+        // Confetti creation
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#0A0A0A', '#16A34A', '#F5A623', '#6B6B6B', '#E5E5E5'];
+
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-piece';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                container.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 4000);
+            }
+        }
+
+        // Update totals with animation
+        function updateTotals() {
+            const total = subtotal + currentShipping + tax;
+
+            // Animate shipping cost change
+            if (currentShipping === 0) {
+                shippingCostEl.textContent = 'Free';
+            } else {
+                shippingCostEl.textContent = '$' + currentShipping.toFixed(2);
+            }
+
+            // Animate total
+            const currentTotal = parseFloat(totalAmountEl.textContent.replace('$', ''));
+            animateNumber(totalAmountEl, total);
+            animateNumber(totalMobileEl, total);
+        }
+
+        // Payment button animation
+        function processPayment(button, textEl, isMobile = false) {
+            // Add loading state
+            button.classList.add('loading');
+            textEl.classList.add('hidden');
+            btnTextLoading.classList.remove('hidden');
+            btnSpinner.classList.remove('hidden');
+
+            // Simulate payment processing
+            setTimeout(() => {
+                // Show success state
+                button.classList.remove('loading');
+                button.classList.add('success');
+                btnTextLoading.classList.add('hidden');
+                btnSpinner.classList.add('hidden');
+
+                if (!isMobile) {
+                    successContainer.classList.remove('hidden');
+                    successContainer.classList.add('animate-bounce-in');
+                } else {
+                    textEl.textContent = 'Success!';
+                    textEl.classList.remove('hidden');
+                }
+
+                // Create confetti celebration
+                createConfetti();
+
+                setTimeout(() => {
+                    alert('Payment successful! Thank you for your order.');
+                }, 800);
+            }, 2500);
+        }
+
+        payButton.addEventListener('click', () => processPayment(payButton, btnText, false));
+        payButtonMobile.addEventListener('click', () => processPayment(payButtonMobile, btnTextMobile, true));
+
+        // Scroll animations with Intersection Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+
+                    // Animate divider line when order summary is visible
+                    if (entry.target.querySelector('#dividerLine')) {
+                        setTimeout(() => {
+                            document.getElementById('dividerLine').style.width = '100%';
+                        }, 200);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Mobile scroll effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const mobileCta = document.querySelector('.mobile-cta');
+            if (mobileCta) {
+                if (scrolled > 100) {
+                    mobileCta.classList.add('shadow-lg', 'bg-white/95', 'backdrop-blur-sm');
+                } else {
+                    mobileCta.classList.remove('shadow-lg', 'bg-white/95', 'backdrop-blur-sm');
+                }
+            }
+        });
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const ripple = document.createElement('span');
+                ripple.style.cssText = `
+                    position: absolute;
+                    background: rgba(255, 255, 255, 0.3);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    width: 100px;
+                    height: 100px;
+                    left: ${x - 50}px;
+                    top: ${y - 50}px;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                `;
+
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Section number pulse effect
+        document.querySelectorAll('.section-number').forEach((num, index) => {
+            setTimeout(() => {
+                num.classList.add('pulse');
+                setTimeout(() => {
+                    num.classList.remove('pulse');
+                }, 1500);
+            }, 100 * index);
+        });
+
+        // Initialize divider animation after page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (document.getElementById('dividerLine')) {
+                    document.getElementById('dividerLine').style.width = '100%';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
